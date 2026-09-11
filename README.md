@@ -3,7 +3,11 @@
 </p>
 
 <p align="center">
-[Live app](https://profast-eae10.web.app/) · [Frontend Repo](https://github.com/achibhossengit/profast-client)
+  <a href="https://profast.achibhossen.me">Live app</a>
+  ·
+  <a href="https://profast-api.achibhossen.me">Live API</a>
+  ·
+  <a href="https://github.com/achibhossengit/profast-client">Client Repo</a>
 </p>
 
 ProFast is a full-stack parcel delivery management system where users can send parcels, track delivery status in real time, and make secure payments. Riders can earn money by delivering parcels, while admins manage users, riders, and delivery operations across Bangladesh.
