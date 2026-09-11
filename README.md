@@ -1,6 +1,10 @@
-## 📦 Profast | A Parcel Delivery Service
+<p align="center">
+  <img src="./docs/images/intro-banner.png" alt="ProFast introduction banner" width="800" />
+</p>
 
+<p align="center">
 [Live app](https://profast-eae10.web.app/) · [Frontend Repo](https://github.com/achibhossengit/profast-client)
+</p>
 
 ProFast is a full-stack parcel delivery management system where users can send parcels, track delivery status in real time, and make secure payments. Riders can earn money by delivering parcels, while admins manage users, riders, and delivery operations across Bangladesh.
 
@@ -27,13 +31,13 @@ This repository is the **backend API**. It handles business logic, REST endpoint
 
 ## 🚀 Tech Stack
 
-| Category       | Technology                 |
-| -------------- | -------------------------- |
-| Runtime        | Node.js, Express 5         |
-| Database       | MongoDB (`ProFastDB`)      |
-| Authentication | Firebase Admin             |
-| Payments       | Stripe                     |
-| Deployment     | Vercel                     |
+| Category       | Technology            |
+| -------------- | --------------------- |
+| Runtime        | Node.js, Express 5    |
+| Database       | MongoDB (`ProFastDB`) |
+| Authentication | Firebase Admin        |
+| Payments       | Stripe                |
+| Deployment     | Vercel                |
 
 ## 🛠️ Installation & Setup
 
@@ -126,13 +130,13 @@ vercel.json      Vercel deployment
 
 MongoDB database: **`ProFastDB`**
 
-| Collection   | Purpose                                      |
-| ------------ | -------------------------------------------- |
-| `users`      | Profiles, roles, and rider details           |
-| `riders`     | Pending rider applications                   |
-| `parcels`    | Parcel data, status, and assignments         |
-| `payments`   | Stripe payment history                       |
-| `warehouses` | Coverage regions, districts, and cities      |
+| Collection   | Purpose                                 |
+| ------------ | --------------------------------------- |
+| `users`      | Profiles, roles, and rider details      |
+| `riders`     | Pending rider applications              |
+| `parcels`    | Parcel data, status, and assignments    |
+| `payments`   | Stripe payment history                  |
+| `warehouses` | Coverage regions, districts, and cities |
 
 ## 🔐 Authentication
 
@@ -142,63 +146,63 @@ Protected routes expect:
 Authorization: Bearer <Firebase ID token>
 ```
 
-| Guard                  | Rule                          |
-| ---------------------- | ----------------------------- |
-| `verifyFirebaseToken`  | Valid Firebase ID token       |
-| `verifyAdmin`          | Role must be `admin`          |
-| `verifyRider`          | Role must be `rider`          |
-| `verifyUser`           | Role must be `user`           |
+| Guard                 | Rule                    |
+| --------------------- | ----------------------- |
+| `verifyFirebaseToken` | Valid Firebase ID token |
+| `verifyAdmin`         | Role must be `admin`    |
+| `verifyRider`         | Role must be `rider`    |
+| `verifyUser`          | Role must be `user`     |
 
 ## 🔌 API Reference
 
 ### Users — `/users`
 
-| Method   | Path              | Access | Description                    |
-| -------- | ----------------- | ------ | ------------------------------ |
-| `POST`   | `/users`          | token  | Create user or refresh login   |
-| `GET`    | `/users/role`     | token  | Current user role              |
-| `GET`    | `/users/profile`  | token  | Current user profile           |
-| `PUT`    | `/users/profile`  | token  | Update profile                 |
-| `PATCH`  | `/users/email`    | token  | Change account email           |
-| `GET`    | `/users`          | admin  | Paginated user list            |
-| `GET`    | `/users/:email`   | admin  | User by email                  |
-| `DELETE` | `/users/:email`   | admin  | Delete user                    |
+| Method   | Path             | Access | Description                  |
+| -------- | ---------------- | ------ | ---------------------------- |
+| `POST`   | `/users`         | token  | Create user or refresh login |
+| `GET`    | `/users/role`    | token  | Current user role            |
+| `GET`    | `/users/profile` | token  | Current user profile         |
+| `PUT`    | `/users/profile` | token  | Update profile               |
+| `PATCH`  | `/users/email`   | token  | Change account email         |
+| `GET`    | `/users`         | admin  | Paginated user list          |
+| `GET`    | `/users/:email`  | admin  | User by email                |
+| `DELETE` | `/users/:email`  | admin  | Delete user                  |
 
 ### Riders — `/riders`
 
-| Method   | Path                                | Access | Description              |
-| -------- | ----------------------------------- | ------ | ------------------------ |
-| `POST`   | `/riders/applications`              | user   | Submit application       |
-| `GET`    | `/riders/applications/:email`       | token  | Get application          |
-| `PUT`    | `/riders/applications/:email`       | token  | Update own application   |
-| `DELETE` | `/riders/applications/:email`       | token  | Delete own application   |
-| `GET`    | `/riders/applications`              | admin  | List applications        |
-| `PATCH`  | `/riders/applications/:email/:accept` | admin | Accept or reject (`true` / `false`) |
-| `GET`    | `/riders/my-earnings`               | rider  | Earnings summary         |
+| Method   | Path                                  | Access | Description                         |
+| -------- | ------------------------------------- | ------ | ----------------------------------- |
+| `POST`   | `/riders/applications`                | user   | Submit application                  |
+| `GET`    | `/riders/applications/:email`         | token  | Get application                     |
+| `PUT`    | `/riders/applications/:email`         | token  | Update own application              |
+| `DELETE` | `/riders/applications/:email`         | token  | Delete own application              |
+| `GET`    | `/riders/applications`                | admin  | List applications                   |
+| `PATCH`  | `/riders/applications/:email/:accept` | admin  | Accept or reject (`true` / `false`) |
+| `GET`    | `/riders/my-earnings`                 | rider  | Earnings summary                    |
 
 ### Parcels — `/parcels`
 
-| Method   | Path                              | Access | Description                    |
-| -------- | --------------------------------- | ------ | ------------------------------ |
-| `GET`    | `/parcels/status-count`           | public | Counts by delivery status      |
-| `GET`    | `/parcels`                        | token  | Role-scoped parcel list        |
-| `GET`    | `/parcels/:id`                    | token  | Parcel by ID                   |
-| `POST`   | `/parcels`                        | token  | Create parcel                  |
-| `PUT`    | `/parcels/:id`                    | token  | Update if pending and unpaid   |
-| `PATCH`  | `/parcels/:id/assign/:rider_email`| admin  | Assign collector or deliverer  |
-| `PATCH`  | `/parcels/:id/status`             | rider  | Advance delivery status        |
-| `DELETE` | `/parcels/:id`                    | token  | Delete if pending and unpaid   |
+| Method   | Path                               | Access | Description                   |
+| -------- | ---------------------------------- | ------ | ----------------------------- |
+| `GET`    | `/parcels/status-count`            | public | Counts by delivery status     |
+| `GET`    | `/parcels`                         | token  | Role-scoped parcel list       |
+| `GET`    | `/parcels/:id`                     | token  | Parcel by ID                  |
+| `POST`   | `/parcels`                         | token  | Create parcel                 |
+| `PUT`    | `/parcels/:id`                     | token  | Update if pending and unpaid  |
+| `PATCH`  | `/parcels/:id/assign/:rider_email` | admin  | Assign collector or deliverer |
+| `PATCH`  | `/parcels/:id/status`              | rider  | Advance delivery status       |
+| `DELETE` | `/parcels/:id`                     | token  | Delete if pending and unpaid  |
 
 ### Payments — `/payments`
 
-| Method | Path                      | Access | Description                         |
-| ------ | ------------------------- | ------ | ----------------------------------- |
-| `POST` | `/payments/create-intent` | token  | Create Stripe PaymentIntent         |
-| `POST` | `/payments`               | token  | Save payment and mark parcel paid   |
-| `GET`  | `/payments`               | token  | Payment history                     |
+| Method | Path                      | Access | Description                       |
+| ------ | ------------------------- | ------ | --------------------------------- |
+| `POST` | `/payments/create-intent` | token  | Create Stripe PaymentIntent       |
+| `POST` | `/payments`               | token  | Save payment and mark parcel paid |
+| `GET`  | `/payments`               | token  | Payment history                   |
 
 ### Warehouses — `/warehouseColl`
 
-| Method | Path             | Access | Description              |
-| ------ | ---------------- | ------ | ------------------------ |
-| `GET`  | `/warehouseColl` | public | Coverage dataset         |
+| Method | Path             | Access | Description      |
+| ------ | ---------------- | ------ | ---------------- |
+| `GET`  | `/warehouseColl` | public | Coverage dataset |
