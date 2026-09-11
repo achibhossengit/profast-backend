@@ -51,8 +51,7 @@ Create a `.env` file in the project root:
 
 ```env
 PORT=5000
-DB_USER=<Your database username>
-DB_PASSWORD=<Your database password>
+MONGODB_URI=<Your MongoDB connection string>
 STRIPE_SECRET_KEY=<Your Stripe secret key>
 FB_SERVICE_KEY=<Your Firebase service account key (Base64)>
 ```
